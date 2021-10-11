@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>TÌM NGƯỜI DÙNG</title>
+    
+    <style>
+        table, th, td {
+      
+        background-color: rgb(255, 255, 255);
+        }
+        body {
+        background-image: url('image/find.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100% 100%;
+          };
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    
+  </head>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js" integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous"></script>
+  
+  <body style="font-family:Arial">
+    <center>
+      <h1 style="color:rgb(0, 0, 0);text-align: center;font-size: 60px; padding: 10px;">TÌM KIẾM - NHIỀU ĐIỀU KIỆN</h1>
+      <div>
+        <div style="background-color:rgba(252, 248, 122, 0.494);width:20%;text-align: center;height: 200px;">
+            <div style="margin-bottom:4px"></div>
+            <h2 align = left-center>TÌM</h2>
+            <div align = center >
+              <font color="black">Ký Tự</font> 
+              <input type="text" placeholder=" Nhập Ký Tự " id="string">
+              <div style="margin-bottom:20px"></div>
+              <font color="black">Số tiền</font> 
+              <input type="text" placeholder=" Nhập số tiền đầu " id="start">
+              <div style="margin-bottom:20px"></div>
+              <font color="black">Số tiền</font> 
+              <input type="text" placeholder=" Nhập số tiền cuối" id="end">
+              <div style="margin-bottom:30px"></div>
+              <button onclick="post1()">TÌM </button>
+              <div style="margin-right:50px"></div>
+            </div>
+            <div style="margin-bottom:5px"></div>
+        </div>
+        
+        </div>
+
+      <div style="margin-bottom:50px"></div>
+      <h2 align = left-center>KẾT QUẢ</h2>
+      <table style="text-align: center;width: 300px;">
+        <tr>
+            <td>Username</td>
+            <td>Salary</td>
+            <td>Time Work</td>
+        </tr>
+        <tr>
+            <td><div id="username"></div></td>
+            <td><div id="salary"></div></td>
+            <td><div id="time_work"></div></td>
+        </tr>
+    </table>
+       
+   
+
+
+
+
+
+
+
+
+
+      <!-- <table cellspacing="0" cellpadding="1" border="1" width="380" >
+               <tr style="color:rgb(228, 0, 0);background-color:grey;text-align: center;">
+                  <td>Username</td>
+                  <td>Salary</td>
+                  <td>Time Work</td>
+               </tr>
+              </td>
+             </table> -->
+        <!-- <tr style="text-align: center;">
+            <div style="width:400px; height:80px; overflow:auto;"> 
+        </tr> -->
+        <!-- <tr>
+            <table style="width: 370px;height: 10px;overflow:auto">
+        </tr>
+        <tr style="text-align: center;">
+          <td><div id="username"></div></td>
+          <td><div id="salary"></div></td>
+          <td><div id="time_work"></div></td>
+        </tr>
+      </table> 
+      </div> -->
+
+    </center>
+
+   <script>
+     var url = "http://192.168.137.7:9999/find";
+     var xhr = new XMLHttpRequest();
+     function post1()
+     {
+      if (confirm("Hoàn Tất Tác Vụ")) 
+      {
+        let string = document.getElementById('string').value;
+        let start = document.getElementById('start').value;
+        let end = document.getElementById('end').value;
+        xhr.open("POST", url,true);
+        xhr.setRequestHeader("Content-type","application/json");
+        if (start != "" && end !="" && string ==="")
+        {
+        xhr.send(JSON.stringify({"salary_start":start,"salary_end":end}));
+        }
+        if (start === "" && end ==="" && string != "")
+        {
+        xhr.send(JSON.stringify({"string_input":string})); 
+        }
+        if (start != "" && end !="" && string !="")
+        {
+        xhr.send(JSON.stringify({"string_input":string,"salary_start":start,"salary_end":end})); 
+        }
+
+        
+        xhr.onload = () =>
+          {
+           var data = JSON.parse(xhr.response);
+           var user_results = "";
+           var salary_results = "";
+           var time_results = "";
+           
+           for (i=0;i<data.length;i++)
+           {  
+           
+              let user = data[i].Username;
+              let salarys = data[i].Salary;
+              let time= data[i].Time_work;
+              user_results += user + "<br/>";
+              salary_results += salarys +  "<br/>";
+              time_results += time +  "<br/>";
+             
+           }
+           username.innerHTML =user_results;
+           salary.innerHTML =salary_results;
+           time_work.innerHTML = time_results;
+    
+        }
+      }
+     else
+     {
+        alert("Đã Hủy Tác Vụ");
+      }
+    }
+    
+   </script>
+
+   </div>
+  
+  </body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>DỌN LỊCH SỬ</title>
+    
+    <style>
+      body {
+        background-image: url('image/clean.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100% 100%;
+          };
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+  </head>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js" integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous"></script>
+  <body>
+    <div style="margin-top: 200px;"></div>
+   <h2 align = center>Xóa Lịch Sử Theo Ngày</h2>
+   <div align = center>
+     <p>
+      <div>
+        <h4 color="blue">Ngày Bắt Đầu</h4> 
+        <input type="date"  id="startday">
+      </div>
+      <div style="margin-bottom:5px"></div>
+        <h4 color="blue">Ngày Kết Thúc</h4> 
+        <input type="date" id="endday"> 
+      <div style="margin-bottom:20px"></div>
+     <button onclick="post()">XÓA</button>
+     </p>
+   </div>
+   <div>
+   <script>
+     var url = "http://192.168.137.7:9999/deletehistory";
+     var xhr = new XMLHttpRequest();
+     function post()
+     {
+      if (confirm("Hoàn Tất Tác Vụ")) 
+      {
+        let start_day = document.getElementById('startday').value;
+        let end_day = document.getElementById('endday').value;
+        if (start_day=='')
+        {
+          alert("Hãy Nhập Ngày Bắt Đầu");
+          return;
+        }
+        if (end_day=='')
+        {
+          alert("Hãy Nhập Ngày Kết Thúc");
+          return;
+        }
+        xhr.open("POST",url,true);
+        xhr.setRequestHeader("Content-type","application/json");
+        xhr.send(JSON.stringify({"date_start":start_day,"date_end":end_day}));
+        xhr.onload = () =>
+          {
+          alert(xhr.response)
+          }
+     }
+     else
+     {
+      alert("Đã Hủy Tác Vụ");
+     }
+    }
+   </script>
+   </div>
+   </div>
+  </body>
+</html>

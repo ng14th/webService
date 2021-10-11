@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>MUA TRÁI CÂY</title>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <style>
+      body {
+        background-image: url('image/buy.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100% 100%;
+          };
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+  </head>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js" integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous"></script>
+  <body>
+    <div style="margin-top: 30px;">
+   <h1 align = center>MUA TRÁI CÂY</h1>
+   <div align = center>
+     <p>
+      <div>
+        <h3  style="color: rgb(0, 0, 0);">Tên Khách Hàng</h3>
+        <input type="text" placeholder="Nhập Tên " id="name" required>
+      </div>
+      <div>
+        <h3 style="color: rgb(0, 0, 0);">Trái Cây</h3>
+      </div>
+        <h4 style="color: rgb(0, 0, 0);">Xoài
+        <input type="number" min=0 max=100 id="xoai" value="0"> 
+        <font color="black">Cam</font> 
+        <input type="number" min=0 max=100 id="cam" value="0">
+        <font color="black">Táo</font> 
+        <input type="number" min=0 max=100 id="tao" value="0">
+        <font color="black">Vải</font> 
+        <input type="number" min=0 max=100 id="vai" value="0"></h4>
+      <div style="margin-bottom:20px"></div>
+     <button onclick="post()">BUY</button>
+     </p>
+   </div>
+   <div>
+   <script>
+     var url = "http://192.168.137.7:9999/buyfruit";
+     var xhr = new XMLHttpRequest();
+     function post()
+     {
+      if (confirm("Hoàn Tất Tác Vụ"))
+      {
+        let name = document.getElementById('name').value;
+        let xoai = document.getElementById('xoai').value;
+        let cam = document.getElementById('cam').value;
+        let tao = document.getElementById('tao').value;
+        let vai = document.getElementById('vai').value;
+        if (name=='')
+        {
+          alert("Hãy Nhập Tên");
+          return;
+        }
+        xhr.open("POST", url,true);
+        xhr.setRequestHeader("Content-type","application/json");
+        xhr.send(JSON.stringify([{"username":name,"xoai":xoai,"cam":cam,"tao":tao,"vai":vai}]));
+        xhr.onload = () =>
+          {
+          alert(xhr.response)
+          }
+      
+     }
+     else
+     {
+       alert("Đã Hủy Tác Vụ");
+     }
+    }
+   </script>
+   </div>
+   </div>
+
+  </body>
+</html>

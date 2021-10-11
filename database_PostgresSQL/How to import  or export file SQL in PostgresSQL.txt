@@ -1,0 +1,6 @@
+- export :
+	+ sudo -u postgres pg_dump --no-owner name_server >> name_file.sql ( create a file SQL with all database of server you want export)
+	+ sudo -u postgres pg_dump --schema-only name_server >> name_file.sql ( create a file SQL with all database structure, but without data of server you want export)
+- import : 
+	+ sudo -u postgres psql " name_server you want import " < name_file.sql ( import file sql into "name_server you want import" in postgres )
+	+ if you are in postgresSQL, the fast way to import is use command " \i /folder_or something else/../name_file.sql

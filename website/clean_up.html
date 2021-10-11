@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>DỌN LỊCH SỬ</title>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <style>
+      body {
+        background-image: url('image/clean.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100% 100%;
+          };
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+  </head>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js" integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous"></script>
+  <body>
+    <div style="margin-top: 200px;">
+   <h1 align = center>Xóa Lịch Sử</h1>
+   <div align = center>
+     <p>
+      <div>
+        <h4 color="blue">Dọn Lịch sử</h4>
+        <input type="text" placeholder="Lựa Chọn Một Trong Hai " id="table_history" required>
+      </div>
+      <div style="margin-bottom:10px"></div>
+      <h5 >1/ historybuy -- 2/ historymoney </h5><br>
+      
+        <h4 color="blue">Giữ Lại Số Lượng Trong Bảng</h4> 
+        <input type="number" min=0 max=1000 id="keep" value="1"> 
+      <div style="margin-bottom:20px"></div>
+     <button onclick="post()">DỌN</button>
+     </p>
+   </div>
+   <div>
+   <script>
+     var url = "http://192.168.137.7:9999/cleanup";
+     var xhr = new XMLHttpRequest();
+
+     function post()
+     {
+      if (confirm("Hoàn Tất Tác Vụ")) 
+      {
+        let history = document.getElementById('table_history').value;
+        let keep = parseInt(document.getElementById('keep').value);
+        if (history=='')
+        {
+          alert("Hãy Nhập Lịch Sử Cần Xóa");
+          return;
+        }
+        xhr.open("POST",url,true);
+        xhr.setRequestHeader("Content-type","application/json");
+        xhr.send(JSON.stringify({"table":history,"keep":keep}));
+        xhr.onload = () =>
+          {
+          alert(xhr.response)
+          }
+     }
+     else
+     {
+       alert("Đã Hủy Tác Vụ");
+     }
+    }
+   </script>
+   </div>
+  </div>
+  </body>
+</html>

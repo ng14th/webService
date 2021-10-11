@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>XEM LỊCH SỬ</title>
+    
+    <style>
+      body {
+        background-image: url('image/find.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100% 100%;
+          };
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    
+  </head>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js" integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous"></script>
+  
+  <body style="font-family:Arial">
+    <center>
+      <h1 style="color:rgb(0, 0, 0);text-align: center;font-size: 60px; padding: 10px;">XEM LỊCH SỬ</h1>
+      <div>
+        <div style="background-color:rgba(252, 248, 122, 0.494);width:25%;height: 160px;text-align: center">
+          <div style="margin-bottom:4px"></div>
+          <h2 align = left-center>LỊCH SỬ MUA </h2>
+          <div align = center >
+            <font color="black">Người Mua</font>
+            <div style="margin-bottom:5px"></div>
+              <input type="text" placeholder="Nhập Tên Người Mua " id="user">
+            <div style="margin-bottom:20px"></div>
+            <button onclick="show()">XEM</button>
+            <div style="margin-right:50px"></div>
+          </div>
+        </div>
+        <div style="background-color:rgba(252, 248, 122, 0.494);width: 25%;;height: 160px;text-align: center">
+          <div style="margin-bottom:4px"></div>
+          <h2 align = left-center>LỊCH SỬ NẠP</h2>
+          <div align = center >
+            <font color="black">Tên</font>
+            <div style="margin-bottom:5px"></div>
+            <input type="text" placeholder="Nhập Tên" id="usermoney">
+            <div style="margin-bottom:20px"></div>
+            <button onclick="showmoney()">XEM</button>
+            <div style="margin-right:50px"></div>
+          </div>
+        </div> 
+      </div>
+
+
+    </center>
+
+   
+  
+      
+  
+
+
+
+   <script>
+    var url2 = "http://192.168.137.7:9999/historybuy";
+    var xhr = new XMLHttpRequest();
+    function show()
+    {
+    if (confirm("Hoàn Tất Tác Vụ")) 
+    {
+     let name = document.getElementById('user').value;
+     if (name=='')
+      {
+          alert("Hãy Nhập Tên Khách Hàng");
+          return;
+      }
+     xhr.open("POST", url2,true);
+     xhr.setRequestHeader("Content-type","application/json");
+     xhr.send(JSON.stringify({"username":name}));
+     xhr.onload = () =>
+          {
+          const data = JSON.parse(xhr.response)
+          alert(data)
+          }
+    }
+    else 
+      {
+        alert("Đã Hủy Tác Vụ");
+      }
+
+  }
+  </script>
+  <script>
+    var url3 = "http://192.168.137.7:9999/historymoney";
+    var xhr = new XMLHttpRequest();
+    function showmoney()
+    {
+    if (confirm("Hoàn Tất Tác Vụ")) 
+    {
+     let name = document.getElementById('usermoney').value;
+     if (name=='')
+        {
+          alert("Hãy Nhập Tên Khách Hàng");
+          return;
+        }
+     xhr.open("POST", url3,true);
+     xhr.setRequestHeader("Content-type","application/json");
+     xhr.send(JSON.stringify({"username":name}));
+    //  xhr.responseType = 'json';
+     xhr.onload = () =>
+          {
+          
+          // const data = JSON.parse(xhr.response);
+          alert(xhr.response);
+          
+          }
+
+}
+    
+    else 
+      {
+        alert("Đã Hủy Tác Vụ");
+      }
+  }
+  </script>
+   </div>
+  
+  </body>
+</html>
